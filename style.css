@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #add8e6; /* colore azzurro */
+}
+
+#login-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+#wishlist-container {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#user-list {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#wishlist {
+  list-style: none;
+  padding: 0;
+}
+
+.gift {
+  margin: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+#add-gift-input {
+  margin-right: 10px;
+}
+
