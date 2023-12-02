@@ -1,50 +1,66 @@
 const express = require('express');
-const sqlite3 = require('sqlite3');
+const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
 
-// Creazione del database SQLite
-const db = new sqlite3.Database('wishlist.db');
+// Connessione al database MongoDB (assicurati di avere MongoDB installato)
+mongoose.connect('mongodb://localhost:27017/wishlist', { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
 
-// Creazione della tabella users
-db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT)');
+// Schema del modello utente
+const userSchema = new mongoose.Schema({
+  username: String,
+  gifts: [String]
+});
 
-// Creazione della tabella gifts
-db.run('CREATE TABLE IF NOT EXISTS gifts (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, gift TEXT, FOREIGN KEY(userId) REFERENCES users(id))');
+// Modello utente
+const User = mongoose.model('User', userSchema);
 
-// Middleware per consentire la lettura del corpo della richiesta
 app.use(express.json());
 
 // API per aggiungere un utente
-app.post('/api/users', (req, res) => {
+app.post('/api/users', async (req, res) => {
   const { username } = req.body;
-  db.run('INSERT INTO users (username) VALUES (?)', [username], function (err) {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json({ userId: this.lastID });
-  });
+
+  try {
+    const user = new User({ username });
+    await user.save();
+    res.json({ userId: user._id });
+  } catch (error) {
+    console.error('Error adding user:', error);
+    res.status(500).json({ error: 'Error adding user' });
+  }
 });
 
 // API per aggiungere un regalo
-app.post('/api/gifts', (req, res) => {
+app.post('/api/gifts', async (req, res) => {
   const { userId, gift } = req.body;
-  db.run('INSERT INTO gifts (userId, gift) VALUES (?, ?)', [userId, gift], function (err) {
-    if (err) {
-      return res.status(500).json({ error: err.message });
+
+  try {
+    const user = await User.findById(userId);
+    if (user) {
+      user.gifts.push(gift);
+      await user.save();
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'User not found' });
     }
-    res.json({ giftId: this.lastID });
-  });
+  } catch (error) {
+    console.error('Error adding gift:', error);
+    res.status(500).json({ error: 'Error adding gift' });
+  }
 });
 
 // API per ottenere la lista dei regali
-app.get('/api/gifts', (req, res) => {
-  db.all('SELECT * FROM gifts', (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(rows);
-  });
+app.get('/api/gifts', async (req, res) => {
+  try {
+    const users = await User.find();
+    const gifts = users.map(user => ({ username: user.username, gifts: user.gifts }));
+    res.json(gifts);
+  } catch (error) {
+    console.error('Error getting gifts:', error);
+    res.status(500).json({ error: 'Error getting gifts' });
+  }
 });
 
 app.listen(port, () => {
