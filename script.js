@@ -1,57 +1,57 @@
-// ...
+let currentUser;
+const users = [
+  { username: 'Chiara', gifts: [] },
+  { username: 'Tony', gifts: [] },
+  { username: 'Gelsomina', gifts: [] },
+  { username: 'Sofia', gifts: [] },
+  { username: 'Alice', gifts: [] },
+  { username: 'Lidia', gifts: [] },
+  { username: 'Roberto', gifts: [] }
+];
 
 function login() {
-  const username = document.getElementById('username').value;
-  if (username.trim() !== '') {
-    fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      currentUser = username;
-      users = [username];
-      document.getElementById('login-container').style.display = 'none';
-      document.getElementById('wishlist-container').style.display = 'block';
-      renderUserList();
-      loadGiftsFromServer();
-    })
-    .catch(error => console.error('Error adding user:', error));
+  const usernameSelect = document.getElementById('username');
+  const selectedUsername = usernameSelect.value;
+  
+  if (selectedUsername.trim() !== '') {
+    currentUser = users.find(user => user.username === selectedUsername);
+    renderWishlist();
   }
 }
 
 function addGift() {
   const giftInput = document.getElementById('add-gift-input');
   const gift = giftInput.value;
+  
   if (gift.trim() !== '') {
-    fetch('/api/gifts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId: 1, gift }), // Assuming userId 1 for simplicity
-    })
-    .then(response => response.json())
-    .then(data => {
-      renderWishlist();
-      renderUserList();
-      giftInput.value = '';
-    })
-    .catch(error => console.error('Error adding gift:', error));
+    currentUser.gifts.push(gift);
+    renderWishlist();
+    giftInput.value = '';
   }
 }
 
-function loadGiftsFromServer() {
-  fetch('/api/gifts')
-    .then(response => response.json())
-    .then(data => {
-      gifts = data;
-      renderWishlist();
-    })
-    .catch(error => console.error('Error getting gifts:', error));
+function renderWishlist() {
+  const userListContainer = document.getElementById('user-list');
+  userListContainer.innerHTML = '<h3>Wishlist</h3>';
+  
+  users.forEach(user => {
+    if (user !== currentUser) {
+      const userDiv = document.createElement('div');
+      userDiv.textContent = user.username + ': ' + user.gifts.join(', ');
+      userListContainer.appendChild(userDiv);
+    }
+  });
 }
 
-// ...
+document.addEventListener('DOMContentLoaded', () => {
+  const usernameSelect = document.getElementById('username');
+  users.forEach(user => {
+    const option = document.createElement('option');
+    option.value = user.username;
+    option.text = user.username;
+    usernameSelect.appendChild(option);
+  });
+
+  const addButton = document.getElementById('add-gift-button');
+  addButton.addEventListener('click', addGift);
+});
