@@ -1,42 +1,44 @@
 body {
+  background-color: #87CEEB; /* Light Blue */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #add8e6; /* colore azzurro */
 }
 
-#login-container {
-  text-align: center;
-  margin-top: 100px;
-}
-
+#login-container,
 #wishlist-container {
-  display: none;
-  text-align: center;
-  margin-top: 20px;
-  background-color: #ffffff;
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
-  border-radius: 10px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+button {
+  display: block;
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
 }
 
 #user-list {
-  text-align: left;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
-
-#wishlist {
-  list-style: none;
-  padding: 0;
-}
-
-.gift {
-  margin: 10px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-
-#add-gift-input {
-  margin-right: 10px;
-}
-
