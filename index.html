@@ -1,41 +1,18 @@
-<!DOCTYPE html>
-<html lang="it">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desideri per Natale</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
+<!-- ... -->
 <body>
-
   <div id="login-container">
-    <label for="username">Seleziona il tuo nome:</label>
-    <select id="username">
-      <option value="Chiara">Chiara</option>
-      <option value="Tony">Tony</option>
-      <option value="Gelsomina">Gelsomina</option>
-      <option value="Sofia">Sofia</option>
-      <option value="Alice">Alice</option>
-      <option value="Lidia">Lidia</option>
-      <option value="Roberto">Roberto</option>
-    </select>
+    <label for="username">Choose your name:</label>
+    <select id="username"></select>
     <button onclick="login()">Login</button>
   </div>
 
   <div id="wishlist-container">
-    <h2>Desideri per Natale</h2>
+    <h2>Wishlist</h2>
     <div id="user-list"></div>
-    <ul id="wishlist"></ul>
-    <label for="add-gift-input">Inserisci il regalo che vorresti:</label>
-    <input type="text" id="add-gift-input">
-    <button onclick="addGift()">Aggiungi</button>
-    <button onclick="chooseGift()">Scegli il regalo</button>
+    <input type="text" id="add-gift-input" placeholder="Add a gift">
+    <button id="add-gift-button">Add Gift</button>
   </div>
 
   <script src="script.js"></script>
-
 </body>
-
-</html>
+<!-- ... -->
