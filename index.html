@@ -1,4 +1,11 @@
-<!-- ... -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
   <div id="login-container">
     <label for="username">Choose your name:</label>
@@ -9,10 +16,11 @@
   <div id="wishlist-container">
     <h2>Wishlist</h2>
     <div id="user-list"></div>
-    <input type="text" id="add-gift-input" placeholder="Add a gift">
-    <button id="add-gift-button">Add Gift</button>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script src="script.js"></script>
 </body>
-<!-- ... -->
+</html>
