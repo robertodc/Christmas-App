@@ -1,3 +1,14 @@
+<script type="importmap">
+<![CDATA[{
+    "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"
+    }
+}]]>
+</script>
+<script type="module">
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+</script>
 // Inizializza Firebase con le tue credenziali
 const firebaseConfig = {
   apiKey: "AIzaSyBooPfv9J2U8TY8yvnnQkTDMu0pOoCc17I",
@@ -9,11 +20,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
-
 const auth = firebase.auth();
-
 
 let currentUser;
 
