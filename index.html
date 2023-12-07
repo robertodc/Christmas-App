@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Christmas App</title>
-  <link rel="stylesheet" href="style.css">
-  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <title>Natale App</title>
 </head>
-<body>
-  <div id="login-container">
-    <label for="username">Choose your name:</label>
-    <select id="username"></select>
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="wishlist-container">
-    <h2>Wishlist</h2>
-    <div id="user-list"></div>
-  </div>
+<body style="background-color: #b0c4de;">
+  <header>
+    <h1>Natale App</h1>
+  </header>
+  <main>
+    <section class="utenti">
+      <h2>Utenti</h2>
+      <ul>
+        </ul>
+    </section>
+    <section class="regali">
+      <h2>Regali</h2>
+      <ul>
+        </ul>
+    </section>
+  </main>
+  <footer>
+    <p>Copyright &copy; 2023</p>
+  </footer>
 
   <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js" type="module"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth-compat.js" type="module"></script>
