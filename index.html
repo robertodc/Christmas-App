@@ -1,34 +1,32 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Natale App</title>
-</head>
-<body style="background-color: #b0c4de;">
-  <script src="bundle.js"></script>
-  <header>
-    <h1>Natale App</h1>
-  </header>
-  <main>
-    <section class="utenti">
-      <h2>Utenti</h2>
-      <ul>
-        </ul>
-    </section>
-    <section class="regali">
-      <h2>Regali</h2>
-      <ul>
-        </ul>
-    </section>
-  </main>
-  <footer>
-    <p>Copyright &copy; 2023</p>
-  </footer>
+<html lang="en">
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js" type="module"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth-compat.js" type="module"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore-compat.js" type="module"></script>
-  <script src="script.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Christmas Gifts</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Christmas Gifts</h1>
+        <form action="process.php" method="post">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <label for="gift">Gift:</label>
+            <input type="text" name="gift" required>
+            <button type="submit">Add Gift</button>
+        </form>
+
+        <h2>Gifts from Others</h2>
+        <ul>
+            <!-- PHP will populate this list dynamically -->
+            <?php include 'display_gifts.php'; ?>
+        </ul>
+    </div>
 </body>
+
 </html>
