@@ -1,32 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Christmas Gifts</title>
+    <title>Lista Regali 2</title>
+    <style>label{display: block; width: 80px;;</style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Christmas Gifts</h1>
-        <form action="process.php" method="post">
-            <label for="username">Username:</label>
-            <input type="text" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" name="password" required>
-            <label for="gift">Gift:</label>
-            <input type="text" name="gift" required>
-            <button type="submit">Add Gift</button>
-        </form>
 
-        <h2>Gifts from Others</h2>
-        <ul>
-            <!-- PHP will populate this list dynamically -->
-            <?php include 'display_gifts.php'; ?>
-        </ul>
-    </div>
+    <label>Nome</label> <input id="Nomebox" type="text">
+    <label>Regalo1</label> <input id="Reg1box" type="text">
+    <label>Regalo2</label> <input id="Reg2box" type="text">
+    <label>Regalo3</label> <input id="Reg3box" type="text">
+    <label>Regalo4</label> <input id="Reg4box" type="text">
+    <label>Regalo5</label> <input id="Reg5box" type="text">
+    
+    <hr>
+    <button id="Insbtn">INSERISCI</button>
+    <button id="Selbtn">SELEZIONA</button>
+    <button id="Updbtn">AGGIORNA</button>
+    <button id="Delbtn">ELIMINA</button>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBooPfv9J2U8TY8yvnnQkTDMu0pOoCc17I",
+            authDomain: "natale-app.firebaseapp.com",
+            databaseURL: "https://natale-app-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "natale-app",
+            storageBucket: "natale-app.appspot.com",
+            messagingSenderId: "678815122675",
+            appId: "1:678815122675:web:d07d2ba57c46fda35ea386"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import {getDatabase, ref, get, set, child, update, remove}
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const db = getDatabase();
+
+        var nomebox = document.getElementById("Nomebox");
+        var reg1box = document.getElementById("Reg1box");
+        var reg2box = document.getElementById("Reg2box");
+        var reg3box = document.getElementById("Reg3box");
+        var reg4box = document.getElementById("Reg4box");
+        var reg5box = document.getElementById("Reg5box");
+
+        var insBtn = document.getElementById("Insbtn");
+        var selBtn = document.getElementById("Selbtn");
+        var updBtn = document.getElementById("Updbtn");
+        var delBtn = document.getElementById("Delbtn");
+
+        function InsertData(){
+            set(ref(db, "Lista/"+ reg1box.value),{
+                NameOfStd: nomebox.value,
+                Regalo1: reg1box.value,
+                Regalo2: reg2box.value,
+                Regalo3: reg3box.value,
+                Regalo4: reg4box.value,
+                Regalo5: reg5box.value
+            })
+            .then(()=>{
+                alert("dati inseriti con successo");
+            })
+            .catch((error)=>{
+                alert("unsuccessful, error"+error);
+            });
+        }
+
+        function SelectData(){
+            const dbref = ref(db);
+
+            get(child(dbref,"Lista/"+ reg1box.value)).then((snapshot)=>{
+                if(snapshot.exists()){
+                    nomebox.value = snapshot.val().NameOfStd;
+                    reg1box.value = snapshot.val().Regalo1;
+                    reg2box.value = snapshot.val().Regalo2;
+                    reg3box.value = snapshot.val().Regalo3;
+                    reg4box.value = snapshot.val().Regalo4;
+                    reg5box.value = snapshot.val().Regalo5;
+                }
+
+                else{
+                    alert("Nessun dato trovato");
+                }
+            })
+            .catch((error)=>{
+                alert("unsuccessful, error"+error);
+            });
+        }
+
+        function UpdateData(){
+            update(ref(db, "Lista/"+ reg1box.value),{
+                NameOfStd: nomebox.value,
+                Regalo1: reg1box.value,
+                Regalo2: reg2box.value,
+                Regalo3: reg3box.value,
+                Regalo4: reg4box.value,
+                Regalo5: reg5box.value
+            })
+            .then(()=>{
+                alert("dati aggiornati con successo");
+            })
+            .catch((error)=>{
+                alert("unsuccessful, error"+error);
+            });
+
+        }
+
+        function DeleteData(){
+            remove(ref(db, "Lista/"+ reg1box.value))
+            .then(()=>{
+                alert("dati eliminati con successo");
+            })
+            .catch((error)=>{
+                alert("unsuccessful, error"+error);
+            });
+        }
+
+        insBtn.addEventListener('click', InsertData);
+        selBtn.addEventListener('click', SelectData);
+        updBtn.addEventListener('click', UpdateData);
+        delBtn.addEventListener('click', DeleteData);
+
+    </script>
+    
 </body>
-
 </html>
