@@ -1,135 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Regali 2</title>
-    <style>label{display: block; width: 80px;;</style>
+    <title>Lista Regali</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <style>
+        .labs{
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Background azzurrino */
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 2px solid #281bde49;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input {
+            width: inline-block;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
+
 <body>
 
-    <label>Nome</label> <input id="Nomebox" type="text">
-    <label>Regalo1</label> <input id="Reg1box" type="text">
-    <label>Regalo2</label> <input id="Reg2box" type="text">
-    <label>Regalo3</label> <input id="Reg3box" type="text">
-    <label>Regalo4</label> <input id="Reg4box" type="text">
-    <label>Regalo5</label> <input id="Reg5box" type="text">
+    <div class="container mt-3">
+
+   
+        <table class="table">
+            <thead>
+                <th>N.</th>
+                <th>Nome</th>
+                <th>Regalo 1</th>
+                <th>Regalo 2</th>
+                <th>Regalo 3</th>
+                <th>Regalo 4</th>
+                <th>Regalo 5</th>
+                <th>Pulsanti di Controllo</th>
+            </thead>
+            <tbody id="tbody1">
+                
+            </tbody>
+        </table>
+
+    </div>
+
+   
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Pannello di Controllo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="labs">Nome: </label>
+        <input type="text" id="NameMod"> <br>
+        <label class="labs">Regalo1: </label>
+        <input type="text" id="Regalo1Mod"> <br>
+        <label class="labs">Regalo2: </label>
+        <input type="text" id="Regalo2Mod"> <br>
+        <label class="labs">Regalo3: </label>
+        <input type="text" id="Regalo3Mod"> <br>
+        <label class="labs">Regalo4: </label>
+        <input type="text" id="Regalo4Mod"> <br>
+        <label class="labs">Regalo5: </label>
+        <input type="text" id="Regalo5Mod"> <br>
+    </div>
+    <div class="modal-footer">
+        <button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddStd()">Inserisci</button>
+        <button id="UpdModBtn" type="button" class="btn btn-success" onclick="UpdStd()">Aggiorna</button>
+        <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelStd()">Elimina</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     
-    <hr>
-    <button id="Insbtn">INSERISCI</button>
-    <button id="Selbtn">SELEZIONA</button>
-    <button id="Updbtn">AGGIORNA</button>
-    <button id="Delbtn">ELIMINA</button>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBooPfv9J2U8TY8yvnnQkTDMu0pOoCc17I",
-            authDomain: "natale-app.firebaseapp.com",
-            databaseURL: "https://natale-app-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "natale-app",
-            storageBucket: "natale-app.appspot.com",
-            messagingSenderId: "678815122675",
-            appId: "1:678815122675:web:d07d2ba57c46fda35ea386"
-        };
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+        <script id="MainScript">
 
-        import {getDatabase, ref, get, set, child, update, remove}
-        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        var firebaseConfig = {
+            apiKey: "AIzaSyCwgPN8vLh2-WByAzLZB0hvw7T-AV1DiQY",
+            authDomain: "lista-2-3133b.firebaseapp.com",
+            databaseURL: "https://lista-2-3133b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "lista-2-3133b",
+            storageBucket: "lista-2-3133b.appspot.com",
+            messagingSenderId: "412019034412",
+            appId: "1:412019034412:web:c50ad3aab6fc0a5aa28489"
+          };
+          firebase.initializeApp(firebaseConfig);
 
-        const db = getDatabase();
+          var studentNo;
 
-        var nomebox = document.getElementById("Nomebox");
-        var reg1box = document.getElementById("Reg1box");
-        var reg2box = document.getElementById("Reg2box");
-        var reg3box = document.getElementById("Reg3box");
-        var reg4box = document.getElementById("Reg4box");
-        var reg5box = document.getElementById("Reg5box");
+          function Select_AllData(){
+            document.getElementById("tbody1").innerHTML="";
+            studentNo=0;
+            firebase.database().ref('student').once('value', function (snapshot) {
+                snapshot.forEach(function (childsnapshot) {
+                        var name = childsnapshot.val().Nome;
+                        var regalo1 = childsnapshot.val().Regalo1;
+                        var regalo2 = childsnapshot.val().Regalo2;
+                        var regalo3 = childsnapshot.val().Regalo3;
+                        var regalo4 = childsnapshot.val().Regalo4;
+                        var regalo5 = childsnapshot.val().Regalo5;
+                        AddItemToTable(name,regalo1,regalo2,regalo3,regalo4,regalo5);
+                    });
+                });
+          }
 
-        var insBtn = document.getElementById("Insbtn");
-        var selBtn = document.getElementById("Selbtn");
-        var updBtn = document.getElementById("Updbtn");
-        var delBtn = document.getElementById("Delbtn");
+          window.onload = Select_AllData;
 
-        function InsertData(){
-            set(ref(db, "Lista/"+ reg1box.value),{
-                NameOfStd: nomebox.value,
-                Regalo1: reg1box.value,
-                Regalo2: reg2box.value,
-                Regalo3: reg3box.value,
-                Regalo4: reg4box.value,
-                Regalo5: reg5box.value
-            })
-            .then(()=>{
-                alert("dati inseriti con successo");
-            })
-            .catch((error)=>{
-                alert("unsuccessful, error"+error);
-            });
+          
+          var stdList =[];
+                    
+          function AddItemToTable(name,regalo1,regalo2,regalo3,regalo4,regalo5){
+            var tbody = document.getElementById('tbody1');
+            var trow = document.createElement('tr');
+            var td0 = document.createElement('td');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+            var td4 = document.createElement('td');
+            var td5 = document.createElement('td');
+            var td6 = document.createElement('td');
+            stdList.push([name,regalo1,regalo2,regalo3,regalo4,regalo5]);
+            td0.innerHTML= ++studentNo;
+            td1.innerHTML= name;
+            td2.innerHTML= regalo1;
+            td3.innerHTML= regalo2;
+            td4.innerHTML= regalo3;
+            td5.innerHTML= regalo4;
+            td6.innerHTML= regalo5;
+            trow.appendChild(td0); 
+            trow.appendChild(td1); 
+            trow.appendChild(td2); 
+            trow.appendChild(td3); 
+            trow.appendChild(td4); 
+            trow.appendChild(td5); 
+            trow.appendChild(td6);
+
+            var ControlDiv = document.createElement("div");
+            ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)">Inserisci</button>'
+            ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+studentNo+')">Modifica/Elimina</button>'
+
+            trow.appendChild(ControlDiv);          
+            tbody1.appendChild(trow);
+          }
+
+          var ModName = document.getElementById('NameMod');
+          var ModRegalo1 = document.getElementById('Regalo1Mod');
+          var ModRegalo2 = document.getElementById('Regalo2Mod');
+          var ModRegalo3 = document.getElementById('Regalo3Mod');
+          var ModRegalo4 = document.getElementById('Regalo4Mod');
+          var ModRegalo5 = document.getElementById('Regalo5Mod');
+
+          var BTNmodAdd = document.getElementById('AddModBtn');
+          var BTNmodUpd = document.getElementById('UpdModBtn');
+          var BTNmodDel = document.getElementById('DelModBtn');
+
+          function FillTboxes(index){
+            if(index==null){
+                ModName.value = "";
+                ModRegalo1.value = "";
+                ModRegalo2.value = "";
+                ModRegalo3.value = "";
+                ModRegalo4.value = "";
+                ModRegalo5.value = "";
+                BTNmodAdd.style.display='inline-block';
+                BTNmodUpd.style.display='none';
+                BTNmodDel.style.display='none';
+            }
+            else{
+                --index;
+                ModName.value = stdList[index][0];
+                ModRegalo1.value = stdList[index][1];
+                ModRegalo2.value = stdList[index][2];
+                ModRegalo3.value = stdList[index][3];
+                ModRegalo4.value = stdList[index][4];
+                ModRegalo5.value = stdList[index][5];
+                BTNmodAdd.style.display='none';
+                BTNmodUpd.style.display='inline-block';
+                BTNmodDel.style.display='inline-block';
+            }
+
         }
-
-        function SelectData(){
-            const dbref = ref(db);
-
-            get(child(dbref,"Lista/"+ reg1box.value)).then((snapshot)=>{
-                if(snapshot.exists()){
-                    nomebox.value = snapshot.val().NameOfStd;
-                    reg1box.value = snapshot.val().Regalo1;
-                    reg2box.value = snapshot.val().Regalo2;
-                    reg3box.value = snapshot.val().Regalo3;
-                    reg4box.value = snapshot.val().Regalo4;
-                    reg5box.value = snapshot.val().Regalo5;
+        
+        function AddStd(){
+            firebase.database().ref("student/"+ModName.value).set(
+                {
+                    Nome: ModName.value,
+                    Regalo1: ModRegalo1.value,
+                    Regalo2: ModRegalo2.value,
+                    Regalo3: ModRegalo3.value,
+                    Regalo4: ModRegalo4.value,
+                    Regalo5: ModRegalo5.value
+                },
+                (error) =>{
+                    if(error){
+                        alert("record was not added, there was some problem");
+                    }
+                    else{
+                        alert("record was added");
+                        Select_AllData();
+                        $("#exampleModalCenter").modal('hide');
+                    }
                 }
+            )
+        }
 
-                else{
-                    alert("Nessun dato trovato");
+        function UpdStd(){
+            firebase.database().ref("student/"+ModName.value).update(
+                {
+                    Nome: ModName.value,
+                    Regalo1: ModRegalo1.value,
+                    Regalo2: ModRegalo2.value,
+                    Regalo3: ModRegalo3.value,
+                    Regalo4: ModRegalo4.value,
+                    Regalo5: ModRegalo5.value
+                },
+                (error) =>{
+                    if(error){
+                        alert("recrd was not updated, there was some problem");
+                    }
+                    else{
+                        alert("record was updated");
+                        Select_AllData();
+                        $("#exampleModalCenter").modal('hide');
+                    }
                 }
-            })
-            .catch((error)=>{
-                alert("unsuccessful, error"+error);
-            });
+            )
         }
 
-        function UpdateData(){
-            update(ref(db, "Lista/"+ reg1box.value),{
-                NameOfStd: nomebox.value,
-                Regalo1: reg1box.value,
-                Regalo2: reg2box.value,
-                Regalo3: reg3box.value,
-                Regalo4: reg4box.value,
-                Regalo5: reg5box.value
-            })
-            .then(()=>{
-                alert("dati aggiornati con successo");
-            })
-            .catch((error)=>{
-                alert("unsuccessful, error"+error);
-            });
-
+        function DelStd(){
+            firebase.database().ref("student/"+ModName.value).remove().then(
+                function(){
+                    alert("record was deleted");
+                        Select_AllData();
+                        $("#exampleModalCenter").modal('hide');
+                }
+            )
         }
 
-        function DeleteData(){
-            remove(ref(db, "Lista/"+ reg1box.value))
-            .then(()=>{
-                alert("dati eliminati con successo");
-            })
-            .catch((error)=>{
-                alert("unsuccessful, error"+error);
-            });
-        }
-
-        insBtn.addEventListener('click', InsertData);
-        selBtn.addEventListener('click', SelectData);
-        updBtn.addEventListener('click', UpdateData);
-        delBtn.addEventListener('click', DeleteData);
 
     </script>
     
