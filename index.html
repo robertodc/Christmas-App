@@ -65,8 +65,6 @@
                 <th>Regalo 1</th>
                 <th>Regalo 2</th>
                 <th>Regalo 3</th>
-                <th>Regalo 4</th>
-                <th>Regalo 5</th>
                 <th>Pulsanti di Controllo</th>
             </thead>
             <tbody id="tbody1">
@@ -96,10 +94,7 @@
         <input type="text" id="Regalo2Mod"> <br>
         <label class="labs">Regalo3: </label>
         <input type="text" id="Regalo3Mod"> <br>
-        <label class="labs">Regalo4: </label>
-        <input type="text" id="Regalo4Mod"> <br>
-        <label class="labs">Regalo5: </label>
-        <input type="text" id="Regalo5Mod"> <br>
+       
     </div>
     <div class="modal-footer">
         <button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddStd()">Inserisci</button>
@@ -144,9 +139,7 @@
                         var regalo1 = childsnapshot.val().Regalo1;
                         var regalo2 = childsnapshot.val().Regalo2;
                         var regalo3 = childsnapshot.val().Regalo3;
-                        var regalo4 = childsnapshot.val().Regalo4;
-                        var regalo5 = childsnapshot.val().Regalo5;
-                        AddItemToTable(name,regalo1,regalo2,regalo3,regalo4,regalo5);
+                        AddItemToTable(name,regalo1,regalo2,regalo3);
                     });
                 });
           }
@@ -156,7 +149,7 @@
           
           var stdList =[];
                     
-          function AddItemToTable(name,regalo1,regalo2,regalo3,regalo4,regalo5){
+          function AddItemToTable(name,regalo1,regalo2,regalo3){
             var tbody = document.getElementById('tbody1');
             var trow = document.createElement('tr');
             var td0 = document.createElement('td');
@@ -164,27 +157,22 @@
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
             var td4 = document.createElement('td');
-            var td5 = document.createElement('td');
-            var td6 = document.createElement('td');
-            stdList.push([name,regalo1,regalo2,regalo3,regalo4,regalo5]);
+            stdList.push([name,regalo1,regalo2,regalo3]);
             td0.innerHTML= ++studentNo;
             td1.innerHTML= name;
             td2.innerHTML= regalo1;
             td3.innerHTML= regalo2;
             td4.innerHTML= regalo3;
-            td5.innerHTML= regalo4;
-            td6.innerHTML= regalo5;
             trow.appendChild(td0); 
             trow.appendChild(td1); 
             trow.appendChild(td2); 
             trow.appendChild(td3); 
             trow.appendChild(td4); 
-            trow.appendChild(td5); 
-            trow.appendChild(td6);
+            
 
             var ControlDiv = document.createElement("div");
             ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)">Inserisci</button>'
-            ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+studentNo+')">Modifica/Elimina</button>'
+            ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+studentNo+')">Modifica / Elimina</button>'
 
             trow.appendChild(ControlDiv);          
             tbody1.appendChild(trow);
@@ -194,9 +182,7 @@
           var ModRegalo1 = document.getElementById('Regalo1Mod');
           var ModRegalo2 = document.getElementById('Regalo2Mod');
           var ModRegalo3 = document.getElementById('Regalo3Mod');
-          var ModRegalo4 = document.getElementById('Regalo4Mod');
-          var ModRegalo5 = document.getElementById('Regalo5Mod');
-
+         
           var BTNmodAdd = document.getElementById('AddModBtn');
           var BTNmodUpd = document.getElementById('UpdModBtn');
           var BTNmodDel = document.getElementById('DelModBtn');
@@ -207,8 +193,6 @@
                 ModRegalo1.value = "";
                 ModRegalo2.value = "";
                 ModRegalo3.value = "";
-                ModRegalo4.value = "";
-                ModRegalo5.value = "";
                 BTNmodAdd.style.display='inline-block';
                 BTNmodUpd.style.display='none';
                 BTNmodDel.style.display='none';
@@ -219,8 +203,6 @@
                 ModRegalo1.value = stdList[index][1];
                 ModRegalo2.value = stdList[index][2];
                 ModRegalo3.value = stdList[index][3];
-                ModRegalo4.value = stdList[index][4];
-                ModRegalo5.value = stdList[index][5];
                 BTNmodAdd.style.display='none';
                 BTNmodUpd.style.display='inline-block';
                 BTNmodDel.style.display='inline-block';
@@ -234,9 +216,8 @@
                     Nome: ModName.value,
                     Regalo1: ModRegalo1.value,
                     Regalo2: ModRegalo2.value,
-                    Regalo3: ModRegalo3.value,
-                    Regalo4: ModRegalo4.value,
-                    Regalo5: ModRegalo5.value
+                    Regalo3: ModRegalo3.value
+                    
                 },
                 (error) =>{
                     if(error){
@@ -257,9 +238,8 @@
                     Nome: ModName.value,
                     Regalo1: ModRegalo1.value,
                     Regalo2: ModRegalo2.value,
-                    Regalo3: ModRegalo3.value,
-                    Regalo4: ModRegalo4.value,
-                    Regalo5: ModRegalo5.value
+                    Regalo3: ModRegalo3.value
+                   
                 },
                 (error) =>{
                     if(error){
